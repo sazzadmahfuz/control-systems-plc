@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLC Control Systems — Sazzad Ibna Mahfuz</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#00FFD1;--purple:#7B61FF;--green:#22C55E;--red:#EF4444;--amber:#F59E0B;--blue:#3B82F6;--bg:#07090D;--bg2:#0D1117;--bg3:#161B22;--border:rgba(0,255,209,0.12);--text:#E6EDF3;--muted:#7D8590}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+header{background:rgba(13,17,23,.95);border-bottom:0.5px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
+.logo{font-family:'Orbitron',monospace;font-size:.9rem;color:var(--cyan)}
+.back{color:var(--muted);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.75rem;transition:color .2s}.back:hover{color:var(--cyan)}
+main{max-width:1300px;margin:0 auto;padding:2rem}
+h1{font-family:'Orbitron',monospace;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+.subtitle{color:var(--muted);font-size:.85rem;font-family:'JetBrains Mono',monospace;margin-bottom:2rem}
+
+/* TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:0.5px solid var(--border);padding-bottom:0}
+.tab-btn{padding:.6rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.75rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;margin-bottom:-0.5px}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* CARDS */
+.card{background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.card-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* STATE MACHINE */
+.state-machine{position:relative;height:360px;background:var(--bg2);border-radius:8px;overflow:hidden}
+#smCanvas{width:100%;height:100%}
+
+/* STATE LOG */
+.state-log{height:160px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:.7rem;display:flex;flex-direction:column;gap:2px}
+.state-log::-webkit-scrollbar{width:3px}.state-log::-webkit-scrollbar-thumb{background:var(--border)}
+.log-line{display:flex;gap:.6rem;padding:.2rem 0;border-bottom:0.5px solid rgba(255,255,255,.04)}
+.log-ts{color:var(--muted);min-width:50px;flex-shrink:0}
+.log-state{min-width:140px;flex-shrink:0}
+.log-msg{color:var(--muted);flex:1}
+
+/* LEDs */
+.led-row{display:flex;gap:1rem;flex-wrap:wrap}
+.led-item{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.led{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.2);transition:all .3s}
+.led.on{box-shadow:0 0 12px currentColor}
+.led-label{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--muted);text-align:center}
+.led-green{background:#111;color:var(--green)}.led-green.on{background:var(--green);color:var(--green)}
+.led-blue{background:#111;color:var(--blue)}.led-blue.on{background:var(--blue);color:var(--blue)}
+.led-amber{background:#111;color:var(--amber)}.led-amber.on{background:var(--amber);color:var(--amber)}
+.led-red{background:#111;color:var(--red)}.led-red.on{background:var(--red);color:var(--red)}
+
+/* CONTROLS */
+.ctrl-btn{padding:.45rem 1rem;border:0.5px solid var(--border);border-radius:6px;background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.72rem;cursor:pointer;transition:all .2s;margin-right:.5rem;margin-bottom:.5rem}
+.ctrl-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,209,.06)}
+.ctrl-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,209,.1)}
+.ctrl-btn.danger:hover{border-color:var(--red);color:var(--red)}
+
+/* GAUGE */
+.gauge-wrap{text-align:center}
+.gauge-val{font-family:'Orbitron',monospace;font-size:2rem;font-weight:700;color:var(--cyan)}
+.gauge-unit{font-size:.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.gauge-bar{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin-top:.5rem}
+.gauge-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width 1s ease}
+.gauge-label{font-size:.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:.3rem}
+
+/* ROBOT CANVAS */
+#robotCanvas{display:block;width:100%;background:var(--bg2);border-radius:8px}
+
+/* FRIDGE CANVAS */
+#fridgeCanvas{display:block;width:100%;background:var(--bg2);border-radius:8px}
+
+/* VAR TABLE */
+.var-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.var-table th{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);text-transform:uppercase;padding:.4rem .6rem;text-align:left;border-bottom:0.5px solid var(--border)}
+.var-table td{padding:.4rem .6rem;border-bottom:0.5px solid rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace;font-size:.72rem}
+.v-true{color:var(--green)}.v-false{color:var(--muted)}.v-real{color:var(--cyan)}.v-state{color:var(--purple)}
+
+/* CODE BLOCK */
+.code-block{background:var(--bg2);border-radius:8px;padding:1rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.7;overflow-x:auto;border:0.5px solid rgba(255,255,255,.06)}
+.kw{color:#FF79C6}.ty{color:#8BE9FD}.cn{color:#BD93F9}.cm{color:#6272A4;font-style:italic}.st{color:#F1FA8C}
+footer{text-align:center;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted)}
+footer a{color:var(--cyan);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PLC CONTROL SYS</div>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted)">TwinCAT · Beckhoff EtherCAT · Structured Text</span>
+  <a href="../../index.html" class="back">← Portfolio</a>
+</header>
+<main>
+  <h1>PLC Control Systems</h1>
+  <p class="subtitle">// HAMK Control Systems Course · TwinCAT 3 / Beckhoff EtherCAT · Group 7</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('sm')">Robot State Machine</button>
+    <button class="tab-btn" onclick="showTab('fridge')">Refrigerator Control</button>
+    <button class="tab-btn" onclick="showTab('code')">Structured Text</button>
+    <button class="tab-btn" onclick="showTab('hw')">Hardware Setup</button>
+  </div>
+
+  <!-- ── TAB 1: STATE MACHINE ── -->
+  <div class="tab-pane active" id="tab-sm">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Process State Machine — Pick & Place with Cooling</div>
+        <div class="state-machine"><canvas id="smCanvas"></canvas></div>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap">
+          <button class="ctrl-btn active" id="btnStart" onclick="startCycle()">▶ Start Cycle</button>
+          <button class="ctrl-btn" id="btnReset" onclick="resetFault()">↺ Reset Fault</button>
+          <button class="ctrl-btn danger" onclick="triggerFault()">⚡ Inject Fault</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="card">
+          <div class="card-title">Live Variables (GVL_IO)</div>
+          <table class="var-table">
+            <thead><tr><th>Variable</th><th>Type</th><th>Value</th><th>Description</th></tr></thead>
+            <tbody id="varTable"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">LED Indicators</div>
+          <div class="led-row">
+            <div class="led-item"><div class="led led-green" id="led-green"></div><div class="led-label">🟢 Green<br>Idle</div></div>
+            <div class="led-item"><div class="led led-blue" id="led-blue"></div><div class="led-label">🔵 Blue<br>Cooling</div></div>
+            <div class="led-item"><div class="led led-amber" id="led-amber"></div><div class="led-label">🟡 Yellow<br>Wait Robot</div></div>
+            <div class="led-item"><div class="led led-red" id="led-red"></div><div class="led-label">🔴 Red<br>Fault</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Temperature Sensor (LM35)</div>
+          <div class="gauge-wrap">
+            <div><span class="gauge-val" id="tempVal">24.2</span><span class="gauge-unit"> °C</span></div>
+            <div class="gauge-label">Setpoint: 8.0°C</div>
+            <div class="gauge-bar"><div class="gauge-fill" id="tempBar" style="width:50%"></div></div>
+            <div class="gauge-label" id="tempStatus">Monitoring…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <div class="card-title">State Transition Log</div>
+      <div class="state-log" id="stateLog"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB 2: FRIDGE ── -->
+  <div class="tab-pane" id="tab-fridge">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Refrigerator Control Visualization</div>
+        <canvas id="fridgeCanvas" height="320"></canvas>
+        <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="ctrl-btn" id="btnDoor" onclick="toggleDoor()">🚪 Toggle Door</button>
+          <button class="ctrl-btn" onclick="resetAlarm()">↺ Reset Alarm</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="card">
+          <div class="card-title">System Parameters</div>
+          <table class="var-table">
+            <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+            <tbody id="fridgeVars"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Temperature History (TwinCAT YT Chart)</div>
+          <div style="height:200px"><canvas id="tempChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 3: CODE ── -->
+  <div class="tab-pane" id="tab-code">
+    <div class="card">
+      <div class="card-title">E_ProcessState — Enumeration (DUT)</div>
+      <div class="code-block"><span class="cm">// Data Unit Type — State machine enumeration</span>
+<span class="kw">{attribute</span> <span class="st">'qualified_only'</span><span class="kw">}</span>
+<span class="kw">{attribute</span> <span class="st">'strict'</span><span class="kw">}</span>
+<span class="kw">TYPE</span> <span class="ty">E_ProcessState</span> :
+(
+    stIdle,               <span class="cm">// Waiting for StartCycle</span>
+    stRequestMoveToP2,    <span class="cm">// PLC sets RobotCmd := TRUE</span>
+    stWaitRobotAtP2,      <span class="cm">// Wait for RobotAck = TRUE (at cooling tank)</span>
+    stCooling,            <span class="cm">// Temperature supervision</span>
+    stRequestMoveToP3,    <span class="cm">// PLC sets RobotCmd := FALSE</span>
+    stWaitRobotAtP3,      <span class="cm">// Wait for RobotAck = FALSE (at output)</span>
+    stDone,               <span class="cm">// Cycle complete</span>
+    stFault               <span class="cm">// Timeout or error</span>
+);
+<span class="kw">END_TYPE</span></div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <div class="card-title">MAIN — State Machine in Structured Text (IEC 61131-3)</div>
+      <div class="code-block"><span class="kw">CASE</span> eState <span class="kw">OF</span>
+    <span class="cn">E_ProcessState.stIdle</span>:
+        bRobotCmd  := <span class="kw">FALSE</span>;
+        bCycleDone := <span class="kw">FALSE</span>;
+        <span class="kw">IF</span> bStartCycle <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stRequestMoveToP2</span>;
+        <span class="kw">END_IF</span>;
+
+    <span class="cn">E_ProcessState.stRequestMoveToP2</span>:
+        bRobotCmd := <span class="kw">TRUE</span>;               <span class="cm">// MG400 DI8 goes HIGH</span>
+        eState    := <span class="cn">E_ProcessState.stWaitRobotAtP2</span>;
+
+    <span class="cn">E_ProcessState.stWaitRobotAtP2</span>:
+        tonStepTimeout(IN := <span class="kw">TRUE</span>, PT := T#30S);
+        <span class="kw">IF</span> bRobotAck <span class="kw">THEN</span>             <span class="cm">// MG400 DO8 → EL1008 DI8</span>
+            eState := <span class="cn">E_ProcessState.stCooling</span>;
+        <span class="kw">ELSIF</span> tonStepTimeout.Q <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stFault</span>;
+        <span class="kw">END_IF</span>;
+
+    <span class="cn">E_ProcessState.stCooling</span>:
+        <span class="cm">// LM35 → EL3074 analog input → rTempValue (scaled to °C)</span>
+        <span class="kw">IF</span> rTempValue &lt;= rTempSetpoint <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stRequestMoveToP3</span>;
+        <span class="kw">END_IF</span>;
+
+    <span class="cn">E_ProcessState.stRequestMoveToP3</span>:
+        bRobotCmd := <span class="kw">FALSE</span>;              <span class="cm">// Signal: move P2 → P3</span>
+        eState    := <span class="cn">E_ProcessState.stWaitRobotAtP3</span>;
+
+    <span class="cn">E_ProcessState.stWaitRobotAtP3</span>:
+        tonStepTimeout(IN := <span class="kw">TRUE</span>, PT := T#30S);
+        <span class="kw">IF NOT</span> bRobotAck <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stDone</span>;
+        <span class="kw">ELSIF</span> tonStepTimeout.Q <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stFault</span>;
+        <span class="kw">END_IF</span>;
+
+    <span class="cn">E_ProcessState.stDone</span>:
+        bCycleDone   := <span class="kw">TRUE</span>;
+        bFaultActive := <span class="kw">FALSE</span>;
+        <span class="kw">IF NOT</span> bStartCycle <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stIdle</span>;
+        <span class="kw">END_IF</span>;
+
+    <span class="cn">E_ProcessState.stFault</span>:
+        bRobotCmd    := <span class="kw">FALSE</span>;
+        bFaultActive := <span class="kw">TRUE</span>;
+        <span class="kw">IF</span> bResetFault <span class="kw">THEN</span>
+            eState := <span class="cn">E_ProcessState.stIdle</span>;
+        <span class="kw">END_IF</span>;
+<span class="kw">END_CASE</span>;</div>
+    </div>
+  </div>
+
+  <!-- ── TAB 4: HARDWARE ── -->
+  <div class="tab-pane" id="tab-hw">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Beckhoff EtherCAT I/O Architecture</div>
+        <div class="code-block" style="font-size:.73rem;line-height:1.9">
+<span class="cn">IPC (Industrial PC)</span>  ─── EtherCAT ───┐
+  TwinCAT Runtime 4024                │
+  IP: 192.168.1.10                    ▼
+                              <span class="ty">EL1008</span>  Digital Input  8-ch
+                              <span class="ty">EL2008</span>  Digital Output 8-ch
+                              <span class="ty">EL3074</span>  Analog Input  4-ch (0-10V / Real32)
+                              <span class="ty">EL4074</span>  Analog Output 4-ch
+
+<span class="cm">── Wiring to Dobot MG400 ──</span>
+EL2008 DO4 ──────────────── MG400 DI8  <span class="st">(PLC → Robot CMD)</span>
+MG400 DO8  ──────────────── EL1008 DI8 <span class="st">(Robot → PLC ACK)</span>
+GND (PLC)  ──────────────── GND (MG400)
+
+<span class="cm">── Temperature Sensor LM35 ──</span>
+Brown  → +24V
+Black  → 0V (GND)
+Blue   → EL3074 Channel 1 (analog input)
+Scale: 10 mV/°C  →  22°C = 0.22V input</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Robot–PLC Handshake Protocol</div>
+        <div class="code-block" style="font-size:.73rem;line-height:2">
+<span class="cm">Single-bit bidirectional handshake:</span>
+
+1. PLC sets CMD = <span class="ty">TRUE</span>
+   → Robot picks at <span class="cn">Position 1</span>
+   → Robot moves to <span class="cn">Position 2</span> (cooling tank)
+
+2. Robot sets ACK = <span class="ty">TRUE</span>
+   → PLC enters <span class="cn">stCooling</span>
+   → Waits: rTempValue ≤ 8.0°C
+
+3. PLC sets CMD = <span class="kw">FALSE</span>
+   → Robot moves from <span class="cn">P2</span> to <span class="cn">P3</span> (output)
+
+4. Robot sets ACK = <span class="kw">FALSE</span>
+   → PLC enters <span class="cn">stDone</span>
+
+<span class="cm">Timeout: 30s per step → stFault</span>
+<span class="cm">Reset: momentary switch bResetFault</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <div class="card-title">Physical I/O Mapping</div>
+      <table class="var-table">
+        <thead><tr><th>Variable</th><th>Qualifier</th><th>Terminal</th><th>Channel</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>bDoorOpen</td><td class="v-true">AT %I*</td><td>EL1008</td><td>CH1</td><td>Toggle switch → door sensor</td></tr>
+          <tr><td>bResetFault</td><td class="v-true">AT %I*</td><td>EL1008</td><td>CH2</td><td>Momentary button → fault reset</td></tr>
+          <tr><td>bRobotAck</td><td class="v-true">AT %I*</td><td>EL1008</td><td>CH8</td><td>MG400 DO8 → robot acknowledge</td></tr>
+          <tr><td>bLight</td><td class="v-false">AT %Q*</td><td>EL2008</td><td>CH1</td><td>LED → door open indicator</td></tr>
+          <tr><td>bAlarm</td><td class="v-false">AT %Q*</td><td>EL2008</td><td>CH2</td><td>Red LED → blinking alarm</td></tr>
+          <tr><td>bRobotCmd</td><td class="v-false">AT %Q*</td><td>EL2008</td><td>CH4</td><td>MG400 DI8 → robot command</td></tr>
+          <tr><td>rTempValue</td><td class="v-true">AT %I*</td><td>EL3074</td><td>CH1</td><td>LM35 analog → Real32 °C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<footer>PLC Control Systems · <a href="https://github.com/sazzadmahfuz/control-systems-plc">github.com/sazzadmahfuz/control-systems-plc</a> · HAMK · Beckhoff TwinCAT</footer>
+
+<script>
+// ── STATE MACHINE ──
+const STATES=['stIdle','stRequestMoveToP2','stWaitRobotAtP2','stCooling','stRequestMoveToP3','stWaitRobotAtP3','stDone','stFault'];
+const STATE_COLORS={'stIdle':'#22C55E','stRequestMoveToP2':'#7B61FF','stWaitRobotAtP2':'#F59E0B','stCooling':'#3B82F6','stRequestMoveToP3':'#7B61FF','stWaitRobotAtP3':'#F59E0B','stDone':'#22C55E','stFault':'#EF4444'};
+const STATE_POS={'stIdle':[0.5,0.08],'stRequestMoveToP2':[0.5,0.25],'stWaitRobotAtP2':[0.78,0.42],'stCooling':[0.5,0.55],'stRequestMoveToP3':[0.22,0.42],'stWaitRobotAtP3':[0.22,0.68],'stDone':[0.5,0.82],'stFault':[0.78,0.68]};
+const TRANSITIONS=[['stIdle','stRequestMoveToP2','bStartCycle'],['stRequestMoveToP2','stWaitRobotAtP2','→'],['stWaitRobotAtP2','stCooling','RobotAck'],['stWaitRobotAtP2','stFault','Timeout'],['stCooling','stRequestMoveToP3','Temp≤8°C'],['stRequestMoveToP3','stWaitRobotAtP3','→'],['stWaitRobotAtP3','stDone','!RobotAck'],['stWaitRobotAtP3','stFault','Timeout'],['stDone','stIdle','!Start'],['stFault','stIdle','Reset']];
+
+let currentState='stIdle';
+let vars={bStartCycle:false,bRobotAck:false,bRobotCmd:false,rTempValue:24.0,rTempSetpoint:8.0,bCycleDone:false,bFaultActive:false};
+let simRunning=false,simTimeout=null;
+let tempHistory=Array.from({length:60},()=>24+Math.random()*2);
+let tempT=0,coolingActive=false;
+
+function showTab(id){document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['sm','fridge','code','hw'][i]===id));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');}
+
+// Draw state machine
+const smC=document.getElementById('smCanvas');
+const smCtx=smC.getContext('2d');
+function drawSM(){
+  smC.width=smC.offsetWidth;smC.height=smC.offsetHeight;
+  const W=smC.width,H=smC.height;
+  smCtx.fillStyle='#0D1117';smCtx.fillRect(0,0,W,H);
+  // grid
+  smCtx.strokeStyle='rgba(0,255,209,.03)';smCtx.lineWidth=1;
+  for(let x=0;x<W;x+=40){smCtx.beginPath();smCtx.moveTo(x,0);smCtx.lineTo(x,H);smCtx.stroke()}
+  for(let y=0;y<H;y+=40){smCtx.beginPath();smCtx.moveTo(0,y);smCtx.lineTo(W,y);smCtx.stroke()}
+  // edges
+  TRANSITIONS.forEach(([a,b,label])=>{
+    const [ax,ay]=STATE_POS[a],[bx,by]=STATE_POS[b];
+    const px1=ax*W,py1=ay*H,px2=bx*W,py2=by*H;
+    const isActive=currentState===a;
+    smCtx.beginPath();smCtx.moveTo(px1,py1);smCtx.lineTo(px2,py2);
+    smCtx.strokeStyle=isActive?'rgba(0,255,209,.8)':'rgba(100,120,150,.25)';
+    smCtx.lineWidth=isActive?2:1;smCtx.stroke();
+    // arrow
+    const ang=Math.atan2(py2-py1,px2-px1);const mx=(px1+px2)/2,my=(py1+py2)/2;
+    smCtx.beginPath();smCtx.moveTo(mx,my);smCtx.lineTo(mx-10*Math.cos(ang-0.35),my-10*Math.sin(ang-0.35));smCtx.lineTo(mx-10*Math.cos(ang+0.35),my-10*Math.sin(ang+0.35));smCtx.closePath();
+    smCtx.fillStyle=isActive?'rgba(0,255,209,.7)':'rgba(100,120,150,.3)';smCtx.fill();
+    // label
+    smCtx.fillStyle='rgba(125,133,144,.6)';smCtx.font='9px JetBrains Mono,monospace';smCtx.textAlign='center';
+    smCtx.fillText(label,mx+10,my-5);
+  });
+  // nodes
+  STATES.forEach(s=>{
+    const [nx,ny]=STATE_POS[s];const px=nx*W,py=ny*H;
+    const isCur=s===currentState;const r=isCur?26:20;
+    const c=STATE_COLORS[s];
+    if(isCur){smCtx.beginPath();smCtx.arc(px,py,r+8,0,Math.PI*2);const g=smCtx.createRadialGradient(px,py,r,px,py,r+8);g.addColorStop(0,c+'55');g.addColorStop(1,'transparent');smCtx.fillStyle=g;smCtx.fill();}
+    smCtx.beginPath();smCtx.arc(px,py,r,0,Math.PI*2);smCtx.fillStyle=isCur?c+'33':'#111';smCtx.fill();
+    smCtx.strokeStyle=c;smCtx.lineWidth=isCur?2:1.2;smCtx.stroke();
+    smCtx.fillStyle=isCur?'#fff':c;smCtx.font=`${isCur?8:7}px JetBrains Mono,monospace`;smCtx.textAlign='center';smCtx.textBaseline='middle';
+    smCtx.fillText(s.replace('st',''),px,py);
+  });
+  smCtx.textAlign='left';smCtx.textBaseline='alphabetic';
+}
+
+// Variable table
+function updateVarTable(){
+  const tb=document.getElementById('varTable');
+  const rows=[['eState','E_ProcessState',`<span class="v-state">${currentState}</span>`],['bStartCycle','BOOL',`<span class="${vars.bStartCycle?'v-true':'v-false'}">${vars.bStartCycle}</span>`],['bRobotAck','BOOL',`<span class="${vars.bRobotAck?'v-true':'v-false'}">${vars.bRobotAck}</span>`],['bRobotCmd','BOOL',`<span class="${vars.bRobotCmd?'v-true':'v-false'}">${vars.bRobotCmd}</span>`],['rTempValue','REAL',`<span class="v-real">${vars.rTempValue.toFixed(1)}</span>`],['rTempSetpoint','REAL',`<span class="v-real">${vars.rTempSetpoint.toFixed(1)}</span>`],['bCycleDone','BOOL',`<span class="${vars.bCycleDone?'v-true':'v-false'}">${vars.bCycleDone}</span>`],['bFaultActive','BOOL',`<span class="${vars.bFaultActive?'v-true':'v-false'}">${vars.bFaultActive}</span>`]];
+  tb.innerHTML=rows.map(([n,t,v])=>`<tr><td>${n}</td><td style="color:var(--muted)">${t}</td><td>${v}</td><td style="color:var(--muted);font-size:.65rem"></td></tr>`).join('');
+}
+
+// LEDs
+function updateLEDs(){
+  document.getElementById('led-green').classList.toggle('on',currentState==='stIdle'||currentState==='stDone');
+  document.getElementById('led-blue').classList.toggle('on',currentState==='stCooling');
+  document.getElementById('led-amber').classList.toggle('on',currentState==='stWaitRobotAtP2'||currentState==='stWaitRobotAtP3');
+  document.getElementById('led-red').classList.toggle('on',currentState==='stFault');
+}
+
+// Temp gauge
+function updateTemp(){
+  const v=vars.rTempValue;
+  document.getElementById('tempVal').textContent=v.toFixed(1);
+  document.getElementById('tempBar').style.width=Math.max(0,Math.min(100,(v/35)*100))+'%';
+  document.getElementById('tempStatus').textContent=currentState==='stCooling'?`Cooling… target ${vars.rTempSetpoint}°C`:currentState==='stIdle'||currentState==='stDone'?'Nominal — ready':'Monitoring';
+}
+
+// State log
+function addLog(from,to,reason){
+  const log=document.getElementById('stateLog');
+  const now=new Date();const ts=`${String(now.getHours()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  const d=document.createElement('div');d.className='log-line';
+  d.innerHTML=`<span class="log-ts">${ts}</span><span class="log-state" style="color:${STATE_COLORS[to]}">${to}</span><span class="log-msg">← ${from} [${reason}]</span>`;
+  log.prepend(d);if(log.children.length>30)log.lastChild.remove();
+}
+
+function transition(to,reason){const from=currentState;currentState=to;addLog(from,to,reason);drawSM();updateVarTable();updateLEDs();}
+
+// Simulation
+function startCycle(){
+  if(currentState!=='stIdle')return;
+  vars.bStartCycle=true;vars.rTempValue=24+Math.random()*4;coolingActive=false;
+  transition('stRequestMoveToP2','bStartCycle=TRUE');
+  setTimeout(()=>{transition('stWaitRobotAtP2','→');},600);
+  setTimeout(()=>{vars.bRobotAck=true;transition('stCooling','RobotAck=TRUE');coolingActive=true;updateVarTable();},2000);
+}
+function resetFault(){if(currentState==='stFault'){vars.bFaultActive=false;vars.bRobotCmd=false;transition('stIdle','bResetFault');}}
+function triggerFault(){if(currentState!=='stIdle'&&currentState!=='stFault'){vars.bFaultActive=true;transition('stFault','Timeout/Error');}}
+
+// Temp simulation
+setInterval(()=>{
+  if(coolingActive&&vars.rTempValue>vars.rTempSetpoint){
+    vars.rTempValue=Math.max(vars.rTempSetpoint-0.5,vars.rTempValue-0.3-Math.random()*0.2);
+    if(vars.rTempValue<=vars.rTempSetpoint&&currentState==='stCooling'){
+      coolingActive=false;vars.bRobotAck=false;
+      transition('stRequestMoveToP3','Temp≤8°C');
+      setTimeout(()=>{transition('stWaitRobotAtP3','→');},600);
+      setTimeout(()=>{vars.bRobotAck=false;vars.bStartCycle=false;transition('stDone','!RobotAck');updateVarTable();},2000);
+      setTimeout(()=>{if(currentState==='stDone')transition('stIdle','!bStartCycle');},3500);
+    }
+  }else if(!coolingActive&&(currentState==='stIdle'||currentState==='stDone')){
+    vars.rTempValue=Math.min(26,vars.rTempValue+0.05*(Math.random()-.3));
+  }
+  tempHistory.shift();tempHistory.push(vars.rTempValue);
+  updateTemp();updateVarTable();
+},500);
+
+window.addEventListener('resize',drawSM);drawSM();updateVarTable();updateLEDs();updateTemp();
+addLog('—','stIdle','System initialised');
+
+// ── FRIDGE ──
+let doorOpen=false,alarmActive=false,fridgeTemp=4.2,fridgeSetpoint=4.0,blinkState=false;
+const fridgeC=document.getElementById('fridgeCanvas');
+const fridgeCtx=fridgeC.getContext('2d');
+function drawFridge(){
+  fridgeC.width=fridgeC.offsetWidth||500;fridgeC.height=320;
+  const W=fridgeC.width,H=320;
+  fridgeCtx.fillStyle='#0D1117';fridgeCtx.fillRect(0,0,W,H);
+  // fridge body
+  const fx=W/2-80,fy=40,fw=160,fh=220;
+  fridgeCtx.fillStyle='#1A2332';fridgeCtx.fillRect(fx,fy,fw,fh);
+  fridgeCtx.strokeStyle=doorOpen?'#EF4444':'#00FFD1';fridgeCtx.lineWidth=2;fridgeCtx.strokeRect(fx,fy,fw,fh);
+  // door line
+  if(doorOpen){fridgeCtx.save();fridgeCtx.strokeStyle='#F59E0B';fridgeCtx.lineWidth=2;fridgeCtx.setLineDash([4,4]);fridgeCtx.beginPath();fridgeCtx.moveTo(fx+fw,fy);fridgeCtx.lineTo(fx+fw+50,fy+10);fridgeCtx.lineTo(fx+fw+50,fy+fh+10);fridgeCtx.lineTo(fx+fw,fy+fh);fridgeCtx.stroke();fridgeCtx.restore();}
+  // interior light
+  if(doorOpen){const g=fridgeCtx.createRadialGradient(fx+fw/2,fy+fh/2,0,fx+fw/2,fy+fh/2,100);g.addColorStop(0,'rgba(255,255,180,.15)');g.addColorStop(1,'transparent');fridgeCtx.fillStyle=g;fridgeCtx.fillRect(fx,fy,fw,fh);}
+  // shelves
+  [0.35,0.6,0.8].forEach(r=>{fridgeCtx.strokeStyle='rgba(255,255,255,.1)';fridgeCtx.lineWidth=1;fridgeCtx.beginPath();fridgeCtx.moveTo(fx+8,fy+fh*r);fridgeCtx.lineTo(fx+fw-8,fy+fh*r);fridgeCtx.stroke();});
+  // handle
+  fridgeCtx.fillStyle='#333';fridgeCtx.fillRect(fx+fw-8,fy+fh/2-20,8,40);
+  // LEDs on fridge panel
+  const ledX=fx-60,ledBaseY=fy+30;
+  [['DOOR',doorOpen?'#F59E0B':'#333','Door',doorOpen],['COMP',fridgeTemp>fridgeSetpoint?'#22C55E':'#333','Comp',fridgeTemp>fridgeSetpoint],['ALRM',alarmActive&&blinkState?'#EF4444':'#333','Alarm',alarmActive]].forEach(([id,col,lbl,on],i)=>{
+    fridgeCtx.beginPath();fridgeCtx.arc(ledX,ledBaseY+i*36,8,0,Math.PI*2);fridgeCtx.fillStyle=col;fridgeCtx.fill();
+    if(on){fridgeCtx.beginPath();fridgeCtx.arc(ledX,ledBaseY+i*36,12,0,Math.PI*2);const g=fridgeCtx.createRadialGradient(ledX,ledBaseY+i*36,4,ledX,ledBaseY+i*36,12);g.addColorStop(0,col+'88');g.addColorStop(1,'transparent');fridgeCtx.fillStyle=g;fridgeCtx.fill();}
+    fridgeCtx.fillStyle='rgba(125,133,144,.7)';fridgeCtx.font='9px JetBrains Mono,monospace';fridgeCtx.textAlign='center';fridgeCtx.fillText(lbl,ledX,ledBaseY+i*36+20);
+  });
+  // temp display
+  fridgeCtx.fillStyle='#00FFD1';fridgeCtx.font='bold 28px Orbitron,monospace';fridgeCtx.textAlign='center';fridgeCtx.fillText(fridgeTemp.toFixed(1)+'°C',W/2,H-40);
+  fridgeCtx.fillStyle='rgba(125,133,144,.6)';fridgeCtx.font='10px JetBrains Mono,monospace';fridgeCtx.fillText(`Setpoint: ${fridgeSetpoint.toFixed(1)}°C`,W/2,H-20);
+  // alarm text
+  if(alarmActive){fridgeCtx.fillStyle=blinkState?'#EF4444':'rgba(239,68,68,.4)';fridgeCtx.font='bold 12px JetBrains Mono,monospace';fridgeCtx.fillText('⚠ DOOR ALARM — CLOSE DOOR',W/2,H-60);}
+  fridgeCtx.textAlign='left';
+}
+function toggleDoor(){doorOpen=!doorOpen;document.getElementById('btnDoor').textContent=doorOpen?'🚪 Close Door':'🚪 Open Door';}
+function resetAlarm(){alarmActive=false;blinkState=false;}
+let doorTimer=0;
+setInterval(()=>{
+  if(doorOpen){fridgeTemp=Math.min(24,fridgeTemp+0.15);doorTimer++;if(doorTimer>15)alarmActive=true;}
+  else{fridgeTemp=Math.max(fridgeSetpoint,fridgeTemp-0.1);doorTimer=0;}
+  blinkState=!blinkState;
+  const fv=document.getElementById('fridgeVars');
+  if(fv)fv.innerHTML=[['bDoorOpen',doorOpen?`<span class="v-true">TRUE</span>`:`<span class="v-false">FALSE</span>`],['bLight',doorOpen?`<span class="v-true">TRUE</span>`:`<span class="v-false">FALSE</span>`],['bAlarm',alarmActive?`<span class="v-true">TRUE</span>`:`<span class="v-false">FALSE</span>`],['rTempValue',`<span class="v-real">${fridgeTemp.toFixed(2)}</span>`],['rTempSetpoint',`<span class="v-real">${fridgeSetpoint.toFixed(1)}</span>`]].map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  drawFridge();
+},800);
+
+// Temp chart
+const tCtx=document.getElementById('tempChart').getContext('2d');
+const tempChart=new Chart(tCtx,{type:'line',data:{labels:Array.from({length:60},(_,i)=>`-${60-i}s`),datasets:[{label:'Temp °C',data:[...tempHistory],borderColor:'#00FFD1',backgroundColor:'rgba(0,255,209,.05)',borderWidth:1.5,pointRadius:0,tension:.4}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:0},plugins:{legend:{display:false}},scales:{x:{ticks:{maxTicksLimit:6,color:'#7D8590',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#7D8590',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}}}}});
+setInterval(()=>{tempChart.data.datasets[0].data=[...tempHistory];tempChart.update('none');},500);
+drawFridge();
+</script>
+</body>
+</html>
