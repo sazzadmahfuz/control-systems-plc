@@ -513,43 +513,6 @@ Benefits include:
 
 ---
 
-# 📂 Repository Structure
-
-```text
-control-systems-plc/
-│
-├── index.html
-├── README.md
-├── LICENSE
-│
-├── Pictures/
-│   ├── 1 (1).jpeg
-│   ├── 1 (1).png
-│   ├── 1 (2).jpeg
-│   ├── 1 (2).png
-│   ├── 1 (3).jpeg
-│   └── 1 (4).jpeg
-│
-├── plc_program/
-├── twincat_project/
-├── robot_logic/
-└── documentation/
-```
-
----
-
-# 🎓 Academic Context
-
-## Programme
-
-Bachelor of Engineering — ICT Robotics
-
-## University
-
-Häme University of Applied Sciences (HAMK)
-
----
-
 # 📚 Topics Covered
 
 - PLC Programming
