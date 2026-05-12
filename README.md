@@ -9,112 +9,325 @@
 [![MG400](https://img.shields.io/badge/Dobot-MG400-red?style=for-the-badge)](.)
 [![Course](https://img.shields.io/badge/HAMK-Control_Systems-003087?style=for-the-badge)](.)
 
-> **Project for Industrial Automation & Control Systems — HAMK University of Applied Sciences**  
-> Real industrial automation project using Beckhoff EtherCAT PLC modules, TwinCAT 3, Structured Text programming, LM35 analog temperature sensing, and Dobot MG400 robot integration.
+### Advanced Industrial Automation & PLC–Robot Integration System
+
+Real industrial automation project developed using:
+
+**TwinCAT 3 · Beckhoff EtherCAT · Structured Text · LM35 Sensors · Dobot MG400 Robot**
+
+---
+
+### 👨‍💻 Developed by
+
+# Sazzad Ibna Mahfuz
+
+Bachelor of Engineering — ICT Robotics  
+Häme University of Applied Sciences (HAMK), Finland
 
 </div>
 
 ---
 
-# 📸 Project Gallery
+# 📌 Project Overview
 
-<div align="center">
+This project demonstrates a complete **Industrial Control Systems and PLC Automation workflow** using real industrial hardware and robot integration technologies.
 
-| Hardware Setup | TwinCAT Configuration |
-|---|---|
-| <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).jpeg" width="420"> | <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).png" width="420"> |
+The system combines:
 
-| PLC Program | Robot Integration |
-|---|---|
-| <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).jpeg" width="420"> | <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).png" width="420"> |
+- Beckhoff EtherCAT I/O terminals
+- TwinCAT 3 PLC programming
+- Structured Text (IEC 61131-3)
+- Analog temperature acquisition
+- Refrigerator compressor automation
+- Alarm and safety systems
+- Industrial robot communication
+- Dobot MG400 robot integration
+- State-machine-based automation logic
+- Human–Machine Interface (HMI)
 
-| Temperature Monitoring | System Overview |
-|---|---|
-| <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(3).jpeg" width="420"> | <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(4).jpeg" width="420"> |
+The project was developed as part of the **Control Systems and Industrial Automation coursework** at:
 
-</div>
+# Häme University of Applied Sciences (HAMK)
 
----
-
-# ✨ Features
-
-| Feature | Description |
-|---|---|
-| **TwinCAT PLC Control** | Industrial PLC programming using Structured Text (IEC 61131-3) |
-| **Real Hardware Integration** | Beckhoff EtherCAT terminals connected to physical I/O |
-| **LM35 Temperature Monitoring** | Analog temperature sensor with real-time acquisition |
-| **Compressor Automation** | Automatic cooling logic based on temperature setpoint |
-| **Alarm System** | Door-open alarm with reset functionality |
-| **Robot–PLC Handshake** | Digital communication between PLC and Dobot MG400 |
-| **Industrial State Machine** | Sequential process automation architecture |
-| **Fault Handling** | Timeout monitoring and fault reset logic |
-| **TwinCAT VISU** | Human–Machine Interface for monitoring and debugging |
-| **Real-Time Monitoring** | Sensor values and outputs updated live |
+The objective was to simulate a real industrial refrigeration and material-handling process where a robot communicates directly with a PLC system using industrial digital I/O.
 
 ---
 
-# 🧠 System Architecture
+# 🎯 Project Objectives
+
+The main objectives of this project were:
+
+- Understand industrial PLC programming concepts
+- Learn TwinCAT 3 industrial automation development
+- Configure Beckhoff EtherCAT terminals
+- Integrate analog and digital industrial sensors
+- Implement real-time compressor control
+- Develop industrial alarm systems
+- Build PLC–robot communication interfaces
+- Implement sequential industrial state machines
+- Understand industrial automation architecture
+- Simulate real manufacturing workflows
+- Develop industrial HMI monitoring systems
+- Perform industrial troubleshooting and debugging
+
+---
+
+# 🧠 Industrial System Architecture
 
 ```text
-[Industrial IPC]
-        │
-   EtherCAT Bus
-        │
- ┌───────────────┐
- │ Beckhoff I/O  │
- └───────────────┘
-        │
- ├── EL1008  → Digital Inputs
- ├── EL2008  → Digital Outputs
- ├── EL3074  → Analog Inputs
- │
- ├── LM35 Temperature Sensor
- ├── LEDs & Push Buttons
- │
- └── Dobot MG400 Robot
+┌────────────────────────────┐
+│        Industrial PC       │
+│        TwinCAT Runtime     │
+└─────────────┬──────────────┘
+              │
+         EtherCAT Bus
+              │
+┌────────────────────────────┐
+│      Beckhoff I/O Rack     │
+├────────────────────────────┤
+│ EL1008 → Digital Inputs    │
+│ EL2008 → Digital Outputs   │
+│ EL3074 → Analog Inputs     │
+└─────────────┬──────────────┘
+              │
+      ┌───────┴────────┐
+      │                │
+┌────────────┐   ┌──────────────┐
+│ LM35 Temp  │   │ Dobot MG400 │
+│ Sensor     │   │ Robot Arm   │
+└────────────┘   └──────────────┘
+              │
+      Refrigerator System
+              │
+      Compressor + Alarm
 ```
 
 ---
 
-# 🔄 PLC ↔ Robot Communication
+# ⚙️ Industrial Hardware Used
+
+| Hardware | Purpose |
+|---|---|
+| Beckhoff IPC | PLC Runtime Environment |
+| EtherCAT Bus | Real-time industrial communication |
+| EL1008 | Digital input terminal |
+| EL2008 | Digital output terminal |
+| EL3074 | Analog input terminal |
+| LM35 Sensor | Temperature acquisition |
+| LEDs & Push Buttons | Industrial input/output simulation |
+| Dobot MG400 | Robot arm integration |
+| TwinCAT 3 | PLC programming platform |
+
+---
+
+# 🔌 EtherCAT I/O Configuration
+
+The system uses industrial Beckhoff EtherCAT terminals for real-time deterministic control.
+
+## Digital Inputs — EL1008
+
+Used for:
+
+- Start button
+- Stop button
+- Reset button
+- Door switch
+- Robot acknowledgment
+- Safety logic
+
+---
+
+## Digital Outputs — EL2008
+
+Used for:
+
+- Compressor control
+- Alarm indicators
+- Robot command signals
+- Status LEDs
+- Cooling process outputs
+
+---
+
+## Analog Inputs — EL3074
+
+Used for:
+
+- LM35 analog temperature sensing
+- Real-time voltage acquisition
+- Sensor scaling and calibration
+
+---
+
+# 🌡️ Temperature Monitoring System
+
+The project implements real-time refrigerator temperature monitoring using an:
+
+# LM35 Analog Temperature Sensor
+
+The LM35 provides a linear analog voltage proportional to temperature:
+
+```text
+10mV / °C
+```
+
+---
+
+## Sensor Scaling
+
+| Temperature | Output Voltage |
+|---|---|
+| 20°C | 0.20V |
+| 25°C | 0.25V |
+| 30°C | 0.30V |
+| 40°C | 0.40V |
+
+---
+
+## PLC Temperature Conversion
+
+The PLC continuously converts raw analog values into engineering units:
+
+```iecst
+Temperature := AnalogVoltage * 100;
+```
+
+This enables:
+
+- Real-time monitoring
+- Cooling control
+- Alarm triggering
+- Process supervision
+
+---
+
+# ❄️ Refrigerator Compressor Logic
+
+The compressor control system uses threshold-based automation.
+
+## Cooling Logic
+
+```text
+IF Temperature > Setpoint
+    Compressor = ON
+ELSE
+    Compressor = OFF
+```
+
+---
+
+## Process Behavior
+
+| Condition | Compressor State |
+|---|---|
+| Temperature above setpoint | ON |
+| Temperature below setpoint | OFF |
+| Door open alarm active | Warning |
+| Fault condition | System Halt |
+
+---
+
+# 🚨 Industrial Alarm System
+
+The system includes fault detection and industrial alarm monitoring.
+
+## Alarm Conditions
+
+- Refrigerator door left open
+- Sensor timeout
+- Robot communication failure
+- Cooling timeout
+- Process interruption
+
+---
+
+## Alarm Features
+
+✅ Alarm reset button  
+✅ Visual alarm indicators  
+✅ PLC fault states  
+✅ Timeout supervision  
+✅ Emergency stop handling
+
+---
+
+# 🤖 PLC ↔ Robot Integration
+
+A major feature of the project is real industrial robot communication between:
+
+# Beckhoff PLC ↔ Dobot MG400 Robot
+
+The PLC communicates with the robot using industrial digital I/O signals.
+
+---
+
+# 🔄 Communication Architecture
 
 ```text
 PLC DO4  ─────→  MG400 DI8
 MG400 DO8 ────→  PLC DI8
 ```
 
-### Process Sequence
+---
+
+# 📡 Robot Handshake Logic
+
+The PLC and robot exchange command and acknowledgment signals.
+
+---
+
+## Process Sequence
 
 ```text
 1. PLC sends RobotCmd = TRUE
-2. Robot moves part to cooling tank
-3. Robot sends RobotAck = TRUE
-4. PLC waits until cooling complete
-5. PLC commands move to final position
-6. Robot sends completion acknowledgement
+2. Robot receives move command
+3. Robot moves object to cooling station
+4. Robot sends RobotAck = TRUE
+5. PLC activates cooling cycle
+6. Cooling timer completes
+7. PLC commands move to output station
+8. Robot confirms completion
+9. PLC returns to idle state
 ```
 
 ---
 
-# 🌡️ Temperature Monitoring
+# 🏭 Industrial Automation Workflow
 
-The project uses an **LM35 analog temperature sensor** connected through Beckhoff analog input terminals.
-
-| Temperature | Voltage |
-|---|---|
-| 20°C | 0.20V |
-| 25°C | 0.25V |
-| 30°C | 0.30V |
-
-The PLC continuously compares:
-- actual temperature
-- configured setpoint
-
-to determine compressor operation.
+```text
+System Start
+     │
+     ▼
+Temperature Monitoring
+     │
+     ▼
+Robot Receives Product
+     │
+     ▼
+Move Product to Cooling Area
+     │
+     ▼
+PLC Activates Compressor
+     │
+     ▼
+Cooling Process
+     │
+     ▼
+Robot Transfers Product
+     │
+     ▼
+Process Complete
+```
 
 ---
 
-# ⚙️ PLC State Machine
+# 🧠 PLC State Machine Architecture
+
+The automation logic was implemented using a professional industrial state machine.
+
+---
+
+## State Machine Definition
 
 ```iecst
 TYPE E_ProcessState :
@@ -133,56 +346,277 @@ END_TYPE
 
 ---
 
-# 🛠️ Technologies Used
+## State Descriptions
+
+| State | Description |
+|---|---|
+| stIdle | Waiting for process start |
+| stRequestMoveToP2 | PLC requests robot movement |
+| stWaitRobotAtP2 | Wait for robot acknowledgment |
+| stCooling | Refrigerator cooling active |
+| stRequestMoveToP3 | Request final transfer |
+| stWaitRobotAtP3 | Waiting for completion |
+| stDone | Process completed |
+| stFault | Fault or timeout condition |
+
+---
+
+# 🖼️ Project Demonstration
+
+The following screenshots demonstrate the real industrial hardware setup, TwinCAT PLC implementation, robot integration, and HMI monitoring environment.
+
+---
+
+<table align="center">
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).jpeg" width="95%">
+
+### Hardware Setup
+
+Industrial Beckhoff PLC setup with EtherCAT terminals, physical wiring, and sensor integration.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).png" width="95%">
+
+### TwinCAT Configuration
+
+TwinCAT 3 runtime configuration with EtherCAT device mapping and PLC variable assignment.
+
+</td>
+</tr>
+
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).jpeg" width="95%">
+
+### PLC Programming
+
+Structured Text implementation of industrial control logic and process automation.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).png" width="95%">
+
+### Robot Integration
+
+PLC-to-robot handshake communication with Dobot MG400 robotic automation.
+
+</td>
+</tr>
+
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(3).jpeg" width="95%">
+
+### Temperature Monitoring
+
+Live LM35 analog temperature monitoring and compressor control visualization.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(4).jpeg" width="95%">
+
+### System Overview
+
+Complete industrial refrigeration and robot automation system overview.
+
+</td>
+</tr>
+</table>
+
+---
+
+# 📊 Industrial HMI & Monitoring
+
+The project includes visualization and real-time monitoring features using TwinCAT visualization tools.
+
+---
+
+## Monitoring Features
+
+✅ Live temperature display  
+✅ Compressor state visualization  
+✅ Alarm indicators  
+✅ Robot communication states  
+✅ Cooling process monitoring  
+✅ Digital I/O visualization  
+✅ Fault condition alerts  
+✅ Process status feedback
+
+---
+
+# 🔐 Industrial Safety & Fault Handling
+
+Industrial automation systems require robust fault handling mechanisms.
+
+The project implements:
+
+- Timeout supervision
+- Fault reset states
+- Safe idle conditions
+- Robot communication validation
+- Cooling timeout protection
+- Sensor validation logic
+
+---
+
+## Example Fault Logic
 
 ```text
-TwinCAT 3
-Structured Text (IEC 61131-3)
-Beckhoff EtherCAT
-PLC Programming
-Industrial Automation
-Robot Integration
-LM35 Sensor
-State Machines
-Industrial Networking
-Industrial HMI
+IF RobotAck NOT received within timeout
+    → Enter stFault
+    → Stop compressor
+    → Raise alarm
+```
+
+---
+
+# ⚡ Real-Time Industrial Communication
+
+The project uses:
+
+# EtherCAT Industrial Communication
+
+Benefits include:
+
+- Deterministic real-time communication
+- High-speed industrial networking
+- Low latency control
+- Reliable synchronization
+- Industrial-grade stability
+
+---
+
+# 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| TwinCAT 3 | PLC development |
+| Structured Text | IEC 61131-3 PLC programming |
+| Beckhoff EtherCAT | Industrial communication |
+| LM35 Sensor | Analog temperature acquisition |
+| Dobot MG400 | Industrial robot integration |
+| EtherCAT Terminals | Industrial I/O |
+| Industrial IPC | PLC runtime execution |
+| HMI Systems | Monitoring & visualization |
+
+---
+
+# 📂 Repository Structure
+
+```text
+control-systems-plc/
+│
+├── index.html
+├── README.md
+├── LICENSE
+│
+├── Pictures/
+│   ├── 1 (1).jpeg
+│   ├── 1 (1).png
+│   ├── 1 (2).jpeg
+│   ├── 1 (2).png
+│   ├── 1 (3).jpeg
+│   └── 1 (4).jpeg
+│
+├── plc_program/
+├── twincat_project/
+├── robot_logic/
+└── documentation/
 ```
 
 ---
 
 # 🎓 Academic Context
 
-**Programme:** BEng ICT & Robotics  
-**University:** HAMK University of Applied Sciences  
+## Programme
 
-### Topics Covered
-- PLC programming
+Bachelor of Engineering — ICT Robotics
+
+## University
+
+Häme University of Applied Sciences (HAMK)
+
+---
+
+# 📚 Topics Covered
+
+- PLC Programming
 - TwinCAT 3
-- EtherCAT communication
-- Industrial I/O mapping
-- Analog sensor integration
-- Robot communication
-- State machine control
-- Industrial automation systems
+- EtherCAT Networking
+- Industrial Automation
+- State Machine Design
+- Industrial Sensors
+- Analog Signal Processing
+- Robot Integration
+- Digital I/O Mapping
+- Industrial HMI Systems
+- Sequential Automation
+- Industrial Communication
 
 ---
 
-# 🚀 Future Improvements
+# 📈 Key Learning Outcomes
 
-- OPC UA integration
-- MQTT cloud monitoring
-- SCADA dashboard
-- SQL data logging
+This project helped develop practical industrial automation skills in:
+
+✅ PLC programming  
+✅ Structured Text development  
+✅ EtherCAT networking  
+✅ TwinCAT engineering  
+✅ Industrial robot communication  
+✅ State-machine-based automation  
+✅ Real-time control systems  
+✅ Industrial fault handling  
+✅ Analog signal processing  
+✅ Industrial refrigeration automation  
+✅ Human–Machine Interface systems
+
+---
+
+# 🔮 Future Improvements
+
+Potential future developments include:
+
+- OPC UA industrial networking
+- MQTT cloud connectivity
+- SCADA integration
+- SQL database logging
 - PID temperature control
-- Multi-robot synchronization
+- AI-based fault prediction
+- Multi-robot coordination
+- ROS2 integration
+- Edge computing integration
+- Industrial dashboard analytics
+- Remote monitoring systems
+- Predictive maintenance systems
 
 ---
 
-# 👤 Author
+# 👨‍💻 Author
 
-**Sazzad Ibna Mahfuz**  
-BEng ICT & Robotics — HAMK University of Applied Sciences
+# Sazzad Ibna Mahfuz
 
-[🌐 Portfolio](https://sazzadmahfuz.github.io)  
-[💼 LinkedIn](https://www.linkedin.com/in/sazzad-mahfuz)  
-[💻 GitHub](https://github.com/sazzadmahfuz)
+Bachelor of Engineering — ICT Robotics  
+Häme University of Applied Sciences (HAMK)  
+Finland
+[Portfolio](https://sazzadmahfuz.github.io) · [LinkedIn](https://www.linkedin.com/in/sazzad-mahfuz) · [GitHub](https://github.com/sazzadmahfuz)
+
+---
+
+<div align="center">
+
+# ⭐ If you found this project interesting, consider starring the repository!
+
+</div>
