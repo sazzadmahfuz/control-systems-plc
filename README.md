@@ -47,7 +47,7 @@ The system combines:
 
 The project was developed as part of the **Control Systems and Industrial Automation coursework** at:
 
-# Häme University of Applied Sciences (HAMK)
+### Häme University of Applied Sciences (HAMK)
 
 The objective was to simulate a real industrial refrigeration and material-handling process where a robot communicates directly with a PLC system using industrial digital I/O.
 
