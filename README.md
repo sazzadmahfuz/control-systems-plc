@@ -28,7 +28,7 @@ Häme University of Applied Sciences (HAMK), Finland
 
 ---
 
-# 📌 Project Overview
+#  Project Overview
 
 This project demonstrates a complete **Industrial Control Systems and PLC Automation workflow** using real industrial hardware and robot integration technologies.
 
@@ -53,7 +53,7 @@ The objective was to simulate a real industrial refrigeration and material-handl
 
 ---
 
-# 🎯 Project Objectives
+#  Project Objectives
 
 The main objectives of this project were:
 
@@ -72,7 +72,7 @@ The main objectives of this project were:
 
 ---
 
-# 🧠 Industrial System Architecture
+#  Industrial System Architecture
 
 ```text
 ┌────────────────────────────┐
@@ -104,7 +104,7 @@ The main objectives of this project were:
 
 ---
 
-# ⚙️ Industrial Hardware Used
+#  Industrial Hardware Used
 
 | Hardware | Purpose |
 |---|---|
@@ -159,7 +159,7 @@ Used for:
 
 ---
 
-# 🌡️ Temperature Monitoring System
+#  Temperature Monitoring System
 
 The project implements real-time refrigerator temperature monitoring using an:
 
@@ -201,7 +201,7 @@ This enables:
 
 ---
 
-# ❄️ Refrigerator Compressor Logic
+#  Refrigerator Compressor Logic
 
 The compressor control system uses threshold-based automation.
 
@@ -251,7 +251,7 @@ The system includes fault detection and industrial alarm monitoring.
 
 ---
 
-# 🤖 PLC ↔ Robot Integration
+#  PLC ↔ Robot Integration
 
 A major feature of the project is real industrial robot communication between:
 
@@ -261,7 +261,7 @@ The PLC communicates with the robot using industrial digital I/O signals.
 
 ---
 
-# 🔄 Communication Architecture
+#  Communication Architecture
 
 ```text
 PLC DO4  ─────→  MG400 DI8
@@ -270,7 +270,7 @@ MG400 DO8 ────→  PLC DI8
 
 ---
 
-# 📡 Robot Handshake Logic
+#  Robot Handshake Logic
 
 The PLC and robot exchange command and acknowledgment signals.
 
@@ -292,7 +292,7 @@ The PLC and robot exchange command and acknowledgment signals.
 
 ---
 
-# 🏭 Industrial Automation Workflow
+#  Industrial Automation Workflow
 
 ```text
 System Start
@@ -321,7 +321,7 @@ Process Complete
 
 ---
 
-# 🧠 PLC State Machine Architecture
+#  PLC State Machine Architecture
 
 The automation logic was implemented using a professional industrial state machine.
 
@@ -361,7 +361,7 @@ END_TYPE
 
 ---
 
-# 🖼️ Project Demonstration
+#  Project Demonstration
 
 The following screenshots demonstrate the real industrial hardware setup, TwinCAT PLC implementation, robot integration, and HMI monitoring environment.
 
@@ -437,7 +437,7 @@ Complete industrial refrigeration and robot automation system overview.
 
 ---
 
-# 📊 Industrial HMI & Monitoring
+#  Industrial HMI & Monitoring
 
 The project includes visualization and real-time monitoring features using TwinCAT visualization tools.
 
@@ -456,7 +456,7 @@ The project includes visualization and real-time monitoring features using TwinC
 
 ---
 
-# 🔐 Industrial Safety & Fault Handling
+#  Industrial Safety & Fault Handling
 
 Industrial automation systems require robust fault handling mechanisms.
 
@@ -482,7 +482,7 @@ IF RobotAck NOT received within timeout
 
 ---
 
-# ⚡ Real-Time Industrial Communication
+#  Real-Time Industrial Communication
 
 The project uses:
 
@@ -498,7 +498,7 @@ Benefits include:
 
 ---
 
-# 🛠️ Technologies Used
+#  Technologies Used
 
 | Technology | Purpose |
 |---|---|
@@ -513,7 +513,7 @@ Benefits include:
 
 ---
 
-# 📚 Topics Covered
+#  Topics Covered
 
 - PLC Programming
 - TwinCAT 3
@@ -530,7 +530,7 @@ Benefits include:
 
 ---
 
-# 📈 Key Learning Outcomes
+#  Key Learning Outcomes
 
 This project helped develop practical industrial automation skills in:
 
@@ -548,7 +548,7 @@ This project helped develop practical industrial automation skills in:
 
 ---
 
-# 🔮 Future Improvements
+#  Future Improvements
 
 Potential future developments include:
 
@@ -567,9 +567,9 @@ Potential future developments include:
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
-# Sazzad Ibna Mahfuz
+## Sazzad Ibna Mahfuz
 
 Bachelor of Engineering — ICT Robotics  
 Häme University of Applied Sciences (HAMK)  
