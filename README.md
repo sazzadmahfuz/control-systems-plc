@@ -373,9 +373,9 @@ The following screenshots demonstrate the real industrial hardware setup, TwinCA
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).jpeg" width="95%">
 
-### Hardware Setup
+### TwinCAT HMI Interface
 
-Industrial Beckhoff PLC setup with EtherCAT terminals, physical wiring, and sensor integration.
+TwinCAT 3 HMI visualization displaying refrigerator process monitoring, control states, and industrial automation interface.
 
 </td>
 
@@ -383,9 +383,9 @@ Industrial Beckhoff PLC setup with EtherCAT terminals, physical wiring, and sens
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).png" width="95%">
 
-### TwinCAT Configuration
+### Dobot MG400 Integration
 
-TwinCAT 3 runtime configuration with EtherCAT device mapping and PLC variable assignment.
+Industrial robot integration setup demonstrating PLC-to-robot communication and automated pick-and-place workflow.
 
 </td>
 </tr>
@@ -395,9 +395,9 @@ TwinCAT 3 runtime configuration with EtherCAT device mapping and PLC variable as
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).jpeg" width="95%">
 
-### PLC Programming
+### Beckhoff PLC Hardware
 
-Structured Text implementation of industrial control logic and process automation.
+Beckhoff EtherCAT PLC rack with industrial I/O terminals, wiring, push buttons, and control components.
 
 </td>
 
@@ -405,9 +405,9 @@ Structured Text implementation of industrial control logic and process automatio
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).png" width="95%">
 
-### Robot Integration
+### Robot Automation Workflow
 
-PLC-to-robot handshake communication with Dobot MG400 robotic automation.
+Dobot MG400 robotic handling process integrated with the industrial cooling and automation sequence.
 
 </td>
 </tr>
@@ -417,9 +417,9 @@ PLC-to-robot handshake communication with Dobot MG400 robotic automation.
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(3).jpeg" width="95%">
 
-### Temperature Monitoring
+### LM35 Temperature Monitoring
 
-Live LM35 analog temperature monitoring and compressor control visualization.
+LM35 analog temperature sensor connected to Beckhoff analog input modules for real-time monitoring and compressor control.
 
 </td>
 
@@ -427,9 +427,9 @@ Live LM35 analog temperature monitoring and compressor control visualization.
 
 <img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(4).jpeg" width="95%">
 
-### System Overview
+### Industrial System Overview
 
-Complete industrial refrigeration and robot automation system overview.
+Complete industrial automation environment combining PLC control, EtherCAT communication, sensor integration, and robotic material handling.
 
 </td>
 </tr>
