@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="TemperatureSimulator" Id="{e4828b09-74f1-4349-aee5-7c58cdf30a5c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TemperatureSimulator
+VAR
+	fbT1 : TON;
+	//The temperature is decreased on a time delay, when the compressor has been activated
+	tCooling : TIME := T#500MS;
+	bReduceTemp : BOOL; //Signal for decreasing the temperature
+	fbT2 : TON;
+	// The temperature is increased on a time delay, when the compressor is off
+	tEnvironment : TIME := T#2S; //Delay time when the door is closed
+	tEnvironmentDoorOpen : TIME := T#1S; //Delay time when the door is open
+	bRaiseTemp : BOOL; //Signal for increasing the temperature
+	tImTemp : TIME; //Delay time for warning due to environment
+	nCounter : INT;
+	Visualization: INT;
+	HMI: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF GVL_Var.fTempActual > (GVL_Var.fTempSet+GVL_Var.fHysteresis) THEN
+GVL_Var.bCompressure := TRUE;
+END_IF
+
+IF GVL_Var.fTempActual < (GVL_Var.fTempSet-GVL_Var.fHysteresis) THEN
+GVL_Var.bCompressure := FALSE;
+END_IF
+
+
+(* Normal warming process: interaction with the environment *)
+//If the door is open, warming will occur faster; SEL selects tEnvironmentDoorOpen
+tImTemp:=SEL(GVL_Var.bDoorOpen, tEnvironment, tEnvironmentDoorOpen);
+//The temperature is incremented by 0.1°C per cycle after a delay of tImTemp
+fbT2(IN:= TRUE, PT:= tImTemp, Q=>bRaiseTemp);
+IF bRaiseTemp THEN
+		GVL_Var.fTempActual := GVL_Var.fTempActual + 0.1;
+		fbT2(IN:=FALSE);
+END_IF
+nCounter := nCounter+1; // No function, just for showing that time is running.]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

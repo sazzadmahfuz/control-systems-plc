@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <Task Name="PlcTask" Id="{213940c8-760f-4c8e-8d3e-fec346ff470a}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>20</Priority>
+    <PouCall>
+      <Name>Fridge3A</Name>
+    </PouCall>
+    <PouCall>
+      <Name>TemperatureSimulator</Name>
+    </PouCall>
+    <TaskFBGuid>{7347d141-06aa-4e3d-a0c1-98273c123859}</TaskFBGuid>
+    <Fb_init>{38e0d6be-9aff-43f9-a255-5ae1118c0349}</Fb_init>
+    <Fb_exit>{aef6dadb-8eec-473a-949c-93c30c80e93d}</Fb_exit>
+    <CycleUpdate>{fa35d528-a510-4968-82c3-ddbc61426498}</CycleUpdate>
+    <PostCycleUpdate>{86e2eeb9-b07d-43ab-b425-189900c6686c}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="Fridge2" Id="{cc92bcfb-bc97-4434-a4a5-5646aacfb67d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fridge2
+VAR
+// Inputs (simulated)
+	bDoorOpen : BOOL; // TRUE = door open
+// Outputs
+	bLight : BOOL; // Interior light
+	bAlarmOut : BOOL;
+	tDoorOpenThreshold : TIME := T#10S; //Time from door opening after which alarm turns on
+	fbTimerDoorAlarm : TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bLight := bDoorOpen;
+// Door alarm timer
+fbTimerDoorAlarm(IN := bDoorOpen, PT := tDoorOpenThreshold);
+// Alarm depends on timer output
+bAlarmOut := fbTimerDoorAlarm.Q;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="Fridge2B" Id="{4fcd4ef5-5aee-48cd-bdf7-3571d7e47a3e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fridge2B
+VAR
+// Inputs (simulated)
+	bDoorOpen : BOOL;
+	bAlarmReset : BOOL; // TRUE = door open
+// Outputs
+	bLight : BOOL; // Interior light
+	bAlarmOut : BOOL;
+	tDoorOpenThreshold : TIME := T#10S; //Time from door opening after which alarm turns on
+	fbTimerDoorAlarm : TON;
+	bAlarmLatched : BOOL; // Latched alaram state
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Light control (same as before)
+bLight := bDoorOpen;
+// Door alarm timer
+fbTimerDoorAlarm(IN := bDoorOpen, PT := tDoorOpenThreshold);
+// Alarm logic with latching
+IF fbTimerDoorAlarm.Q THEN
+	bAlarmLatched := TRUE;
+END_IF
+// Reset alarm
+IF bAlarmReset THEN
+	bAlarmLatched := FALSE;
+END_IF
+// Output alarm
+bAlarmOut := bAlarmLatched;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

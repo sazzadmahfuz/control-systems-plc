@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="Fridge3A" Id="{ee485ebe-4379-4cf8-8d8b-2e7bf1629d45}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fridge3A
+VAR
+// Inputs (simulated)
+	
+	
+	
+	
+
+	
+	tDoorOpenThreshold : TIME := T#10S; //Time from door opening after which alarm turns on
+	
+	fbTimerDoorAlarm : TON;
+	bAlarmLatched : BOOL; // Latched alaram state
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Light control (same as before)
+GVL_Var.bLight := GVL_Var.bDoorOpen;
+// Door alarm timer
+fbTimerDoorAlarm(IN := GVL_Var.bDoorOpen, PT := tDoorOpenThreshold);
+// Alarm logic with latching
+IF fbTimerDoorAlarm.Q THEN
+	bAlarmLatched := TRUE;
+END_IF
+// Reset alarm
+IF GVL_Var.bAlarmReset THEN
+	bAlarmLatched := FALSE;
+END_IF
+// Output alarm
+GVL_Var.bAlarmOut := bAlarmLatched;
+// Compressor control
+IF GVL_Var.fTempActual > GVL_Var.fTempSet THEN
+	GVL_Var.bCompressor := TRUE; // Warm: turn ON
+ELSE
+	GVL_Var.bCompressor := FALSE; // Cold: turn OFF
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

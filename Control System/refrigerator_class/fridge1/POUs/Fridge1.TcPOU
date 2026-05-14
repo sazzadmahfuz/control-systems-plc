@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="Fridge1" Id="{a6eb933c-1bbb-440c-8cb2-d01941b2a718}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fridge1
+VAR
+// Inputs (simulated)
+	bDoorOpen : BOOL; // TRUE = door open
+// Outputs
+	bLight : BOOL; // Interior light
+	nCounter : INT;
+END_VAR
+// Simple logic: light follows door state
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bLight := bDoorOpen;
+nCounter := nCounter + 1;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

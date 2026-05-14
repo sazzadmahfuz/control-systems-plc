@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_Var" Id="{747d40de-bd0e-4206-986b-85ce9e5ddf58}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	bDoorOpen : BOOL; // to set the door open
+	bAlarmReset : BOOL; // TRUE = door open, button to reset alarm
+	fTempActual : REAL := 5.0; // Actual temperature
+	fTempSet : REAL := 8.0; // Set temperature
+	fHysteresis : REAL := 1.0;
+	// Outputs
+	bLight : BOOL; // Interior light
+	bAlarmOut : BOOL;
+	
+	bCompressor : BOOL := FALSE; // Compressor state (init OFF)
+	bCompressure: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
