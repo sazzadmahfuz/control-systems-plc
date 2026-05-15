@@ -104,6 +104,82 @@ The main objectives of this project were:
 
 ---
 
+# Project Demonstration
+
+The following images present the real industrial implementation of the system, including **TwinCAT HMI visualization, Beckhoff PLC hardware, EtherCAT I/O configuration, LM35 sensor integration, and Dobot MG400 robot communication** within the complete refrigeration and material-handling workflow.
+
+---
+
+<table align="center">
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).jpeg" width="95%">
+
+### TwinCAT HMI Visualization
+
+TwinCAT 3 HMI interface displaying real-time process monitoring, temperature control states, compressor status, and system operation feedback.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).png" width="95%">
+
+### Dobot MG400 Robot Integration
+
+Industrial robot workstation demonstrating PLC-to-robot communication, motion control, and automated pick-and-place operation.
+
+</td>
+</tr>
+
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).jpeg" width="95%">
+
+### Beckhoff PLC Control Hardware
+
+Beckhoff EtherCAT PLC setup with industrial I/O terminals, push-button controls, signal indicators, and field wiring for real-time automation.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).png" width="95%">
+
+### Automated Robot Process Sequence
+
+Dobot MG400 executing coordinated material handling tasks integrated with the PLC-controlled cooling process sequence.
+
+</td>
+</tr>
+
+<tr>
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(3).jpeg" width="95%">
+
+### LM35 Sensor & Analog Monitoring
+
+LM35 temperature sensor connected to Beckhoff analog input modules for continuous temperature acquisition and compressor control logic.
+
+</td>
+
+<td align="center" width="50%">
+
+<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(4).jpeg" width="95%">
+
+### Complete Industrial System Overview
+
+Integrated automation environment combining PLC control, EtherCAT communication, sensor monitoring, HMI visualization, and robotic handling.
+
+</td>
+</tr>
+</table>
+
+---
+
 #  Industrial Hardware Used
 
 | Hardware | Purpose |
@@ -361,81 +437,6 @@ END_TYPE
 
 ---
 
-#  Project Demonstration
-
-The following screenshots demonstrate the real industrial hardware setup, TwinCAT PLC implementation, robot integration, and HMI monitoring environment.
-
----
-
-<table align="center">
-<tr>
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).jpeg" width="95%">
-
-### TwinCAT HMI Interface
-
-TwinCAT 3 HMI visualization displaying refrigerator process monitoring, control states, and industrial automation interface.
-
-</td>
-
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(1).png" width="95%">
-
-### Dobot MG400 Integration
-
-Industrial robot integration setup demonstrating PLC-to-robot communication and automated pick-and-place workflow.
-
-</td>
-</tr>
-
-<tr>
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).jpeg" width="95%">
-
-### Beckhoff PLC Hardware
-
-Beckhoff EtherCAT PLC rack with industrial I/O terminals, wiring, push buttons, and control components.
-
-</td>
-
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(2).png" width="95%">
-
-### Robot Automation Workflow
-
-Dobot MG400 robotic handling process integrated with the industrial cooling and automation sequence.
-
-</td>
-</tr>
-
-<tr>
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(3).jpeg" width="95%">
-
-### LM35 Temperature Monitoring
-
-LM35 analog temperature sensor connected to Beckhoff analog input modules for real-time monitoring and compressor control.
-
-</td>
-
-<td align="center" width="50%">
-
-<img src="https://raw.githubusercontent.com/sazzadmahfuz/control-systems-plc/main/Pictures/1%20(4).jpeg" width="95%">
-
-### Industrial System Overview
-
-Complete industrial automation environment combining PLC control, EtherCAT communication, sensor integration, and robotic material handling.
-
-</td>
-</tr>
-</table>
-
----
 
 #  Industrial HMI & Monitoring
 
