@@ -303,7 +303,7 @@ ELSE
 
 ---
 
-# 🚨 Industrial Alarm System
+#  Industrial Alarm System
 
 The system includes fault detection and industrial alarm monitoring.
 
@@ -319,11 +319,11 @@ The system includes fault detection and industrial alarm monitoring.
 
 ## Alarm Features
 
-✅ Alarm reset button  
-✅ Visual alarm indicators  
-✅ PLC fault states  
-✅ Timeout supervision  
-✅ Emergency stop handling
+- Alarm reset button  
+- Visual alarm indicators  
+- PLC fault states  
+- Timeout supervision  
+- Emergency stop handling
 
 ---
 
@@ -446,14 +446,14 @@ The project includes visualization and real-time monitoring features using TwinC
 
 ## Monitoring Features
 
-✅ Live temperature display  
-✅ Compressor state visualization  
-✅ Alarm indicators  
-✅ Robot communication states  
-✅ Cooling process monitoring  
-✅ Digital I/O visualization  
-✅ Fault condition alerts  
-✅ Process status feedback
+- Live temperature display  
+- Compressor state visualization  
+- Alarm indicators  
+- Robot communication states  
+- Cooling process monitoring  
+- Digital I/O visualization  
+- Fault condition alerts  
+- Process status feedback
 
 ---
 
@@ -535,17 +535,17 @@ Benefits include:
 
 This project helped develop practical industrial automation skills in:
 
-✅ PLC programming  
-✅ Structured Text development  
-✅ EtherCAT networking  
-✅ TwinCAT engineering  
-✅ Industrial robot communication  
-✅ State-machine-based automation  
-✅ Real-time control systems  
-✅ Industrial fault handling  
-✅ Analog signal processing  
-✅ Industrial refrigeration automation  
-✅ Human–Machine Interface systems
+- PLC programming  
+- Structured Text development  
+- EtherCAT networking  
+- TwinCAT engineering  
+- Industrial robot communication  
+- State-machine-based automation  
+- Real-time control systems  
+- Industrial fault handling  
+- Analog signal processing  
+- Industrial refrigeration automation  
+- Human–Machine Interface systems
 
 ---
 
