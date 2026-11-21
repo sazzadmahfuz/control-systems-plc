@@ -473,7 +473,7 @@ function drawFridge(){
   fridgeCtx.fillStyle='#00FFD1';fridgeCtx.font='bold 28px Orbitron,monospace';fridgeCtx.textAlign='center';fridgeCtx.fillText(fridgeTemp.toFixed(1)+'°C',W/2,H-40);
   fridgeCtx.fillStyle='rgba(125,133,144,.6)';fridgeCtx.font='10px JetBrains Mono,monospace';fridgeCtx.fillText(`Setpoint: ${fridgeSetpoint.toFixed(1)}°C`,W/2,H-20);
   // alarm text
-  if(alarmActive){fridgeCtx.fillStyle=blinkState?'#EF4444':'rgba(239,68,68,.4)';fridgeCtx.font='bold 12px JetBrains Mono,monospace';fridgeCtx.fillText('⚠ DOOR ALARM — CLOSE DOOR',W/2,H-60);}
+  if(alarmActive){fridgeCtx.fillStyle=blinkState?'#EF4444':'rgba(239,68,68,.4)';fridgeCtx.font='bold 12px JetBrains Mono,monospace';fridgeCtx.fillText('DOOR ALARM - CLOSE DOOR',W/2,H-60);}
   fridgeCtx.textAlign='left';
 }
 function toggleDoor(){doorOpen=!doorOpen;document.getElementById('btnDoor').textContent=doorOpen?'Close door':'Open door';}
