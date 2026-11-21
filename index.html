@@ -110,9 +110,9 @@ footer a{color:var(--cyan);text-decoration:none}
         <div class="card-title">Process State Machine — Pick & Place with Cooling</div>
         <div class="state-machine"><canvas id="smCanvas"></canvas></div>
         <div style="display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap">
-          <button class="ctrl-btn active" id="btnStart" onclick="startCycle()">▶ Start Cycle</button>
+          <button class="ctrl-btn active" id="btnStart" onclick="startCycle()">Start cycle</button>
           <button class="ctrl-btn" id="btnReset" onclick="resetFault()">↺ Reset Fault</button>
-          <button class="ctrl-btn danger" onclick="triggerFault()">⚡ Inject Fault</button>
+          <button class="ctrl-btn danger" onclick="triggerFault()">Inject fault</button>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:1rem">
@@ -126,10 +126,10 @@ footer a{color:var(--cyan);text-decoration:none}
         <div class="card">
           <div class="card-title">LED Indicators</div>
           <div class="led-row">
-            <div class="led-item"><div class="led led-green" id="led-green"></div><div class="led-label">🟢 Green<br>Idle</div></div>
-            <div class="led-item"><div class="led led-blue" id="led-blue"></div><div class="led-label">🔵 Blue<br>Cooling</div></div>
-            <div class="led-item"><div class="led led-amber" id="led-amber"></div><div class="led-label">🟡 Yellow<br>Wait Robot</div></div>
-            <div class="led-item"><div class="led led-red" id="led-red"></div><div class="led-label">🔴 Red<br>Fault</div></div>
+            <div class="led-item"><div class="led led-green" id="led-green"></div><div class="led-label">Green<br>Idle</div></div>
+            <div class="led-item"><div class="led led-blue" id="led-blue"></div><div class="led-label">Blue<br>Cooling</div></div>
+            <div class="led-item"><div class="led led-amber" id="led-amber"></div><div class="led-label">Yellow<br>Wait Robot</div></div>
+            <div class="led-item"><div class="led led-red" id="led-red"></div><div class="led-label">Red<br>Fault</div></div>
           </div>
         </div>
         <div class="card">
@@ -156,7 +156,7 @@ footer a{color:var(--cyan);text-decoration:none}
         <div class="card-title">Refrigerator Control Visualization</div>
         <canvas id="fridgeCanvas" height="320"></canvas>
         <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">
-          <button class="ctrl-btn" id="btnDoor" onclick="toggleDoor()">🚪 Toggle Door</button>
+          <button class="ctrl-btn" id="btnDoor" onclick="toggleDoor()">Toggle door</button>
           <button class="ctrl-btn" onclick="resetAlarm()">↺ Reset Alarm</button>
         </div>
       </div>
@@ -476,7 +476,7 @@ function drawFridge(){
   if(alarmActive){fridgeCtx.fillStyle=blinkState?'#EF4444':'rgba(239,68,68,.4)';fridgeCtx.font='bold 12px JetBrains Mono,monospace';fridgeCtx.fillText('⚠ DOOR ALARM — CLOSE DOOR',W/2,H-60);}
   fridgeCtx.textAlign='left';
 }
-function toggleDoor(){doorOpen=!doorOpen;document.getElementById('btnDoor').textContent=doorOpen?'🚪 Close Door':'🚪 Open Door';}
+function toggleDoor(){doorOpen=!doorOpen;document.getElementById('btnDoor').textContent=doorOpen?'Close door':'Open door';}
 function resetAlarm(){alarmActive=false;blinkState=false;}
 let doorTimer=0;
 setInterval(()=>{

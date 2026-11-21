@@ -1,0 +1,10 @@
+# TwinCAT build output and local files
+_Boot/
+_CompileInfo/
+_CompileInfo_Upload/
+_Libraries/
+*.tclrs
+*.bak
+*.suo
+.vs/
+desktop.ini
